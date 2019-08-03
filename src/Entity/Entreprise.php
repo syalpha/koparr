@@ -58,9 +58,15 @@ class Entreprise
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="identreprise")
+     */
+    private $comptes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,37 @@ class Entreprise
             // set the owning side to null (unless already changed)
             if ($user->getIdentreprise() === $this) {
                 $user->setIdentreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Compte[]
+     */
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(Compte $compte): self
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes[] = $compte;
+            $compte->setIdentreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompte(Compte $compte): self
+    {
+        if ($this->comptes->contains($compte)) {
+            $this->comptes->removeElement($compte);
+            // set the owning side to null (unless already changed)
+            if ($compte->getIdentreprise() === $this) {
+                $compte->setIdentreprise(null);
             }
         }
 

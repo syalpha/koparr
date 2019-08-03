@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -57,6 +59,16 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="users")
      */
     private $identreprise;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Transaction", mappedBy="iduser")
+     */
+    private $transactions;
+
+    public function __construct()
+    {
+        $this->transactions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,6 +199,37 @@ class User implements UserInterface
     public function setIdentreprise(?Entreprise $identreprise): self
     {
         $this->identreprise = $identreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions[] = $transaction;
+            $transaction->setIduser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transactions->contains($transaction)) {
+            $this->transactions->removeElement($transaction);
+            // set the owning side to null (unless already changed)
+            if ($transaction->getIduser() === $this) {
+                $transaction->setIduser(null);
+            }
+        }
 
         return $this;
     }
