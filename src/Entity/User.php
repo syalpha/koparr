@@ -65,6 +65,11 @@ class User implements UserInterface
      */
     private $transactions;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $CNI;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -230,6 +235,18 @@ class User implements UserInterface
                 $transaction->setIduser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCNI(): ?int
+    {
+        return $this->CNI;
+    }
+
+    public function setCNI(int $CNI): self
+    {
+        $this->CNI = $CNI;
 
         return $this;
     }

@@ -19,14 +19,9 @@ class Compte
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $numcompte;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $montant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="comptes")
@@ -38,6 +33,11 @@ class Compte
      */
     private $transactions;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $solde;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -48,26 +48,14 @@ class Compte
         return $this->id;
     }
 
-    public function getNumcompte(): ?int
+    public function getNumcompte(): ?string
     {
         return $this->numcompte;
     }
 
-    public function setNumcompte(int $numcompte): self
+    public function setNumcompte(string $numcompte): self
     {
         $this->numcompte = $numcompte;
-
-        return $this;
-    }
-
-    public function getMontant(): ?int
-    {
-        return $this->montant;
-    }
-
-    public function setMontant(int $montant): self
-    {
-        $this->montant = $montant;
 
         return $this;
     }
@@ -111,6 +99,18 @@ class Compte
                 $transaction->setIdcompte(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSolde(): ?int
+    {
+        return $this->solde;
+    }
+
+    public function setSolde(int $solde): self
+    {
+        $this->solde = $solde;
 
         return $this;
     }

@@ -36,18 +36,17 @@ class SecurityController extends AbstractController
 
             $entrepris=$this->getDoctrine()->getRepository(Entreprise::class)->find(1);
             
-            
             $user->setIdentreprise($entrepris);
             $entityManager->persist($user);
             $entityManager->persist($entrepris);
             $entityManager->flush();
             
-            $data = [
+            $rep = [
                 'status' => 201,
                 'message' => 'L\'utilisateur a été créé'
             ];
             
-            return new JsonResponse($data, 201);
+            return new JsonResponse($rep, 201);
         }
         $data = [
             'status' => 500,
@@ -85,6 +84,8 @@ class SecurityController extends AbstractController
             $user->setUsername($values->username);
             $user->setPassword($passwordEncoder->encodePassword($user, $values->password));
             $user->setRoles(['ROLE_CAISSIER']);
+
+            $user=$this->getDoctrine()->getRepository(Entreprise::class)->find(1);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
