@@ -28,13 +28,15 @@ class TransactionController extends AbstractController
             $trans->setMontant($values->montant);
             $trans->setDatetrans(new \DateTime());
 
+            $connect
+
             $compte = $this->getDoctrine()->getRepository(Compte::class)->find(2);
-            $user = $this->getDoctrine()->getRepository(User::class)->find(1);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($values-> Iduser);
 
             $compte->setSolde($compte->getSolde() + $values->montant);
             
-            $trans->setIdcompte($compte);
-            $trans->setIduser($user);
+            $trans->getIdcompte($compte);
+            $trans->getIduser($user);
             $entityManager->persist($trans);
             $entityManager->persist($compte);
             $entityManager->flush();

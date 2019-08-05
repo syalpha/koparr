@@ -257,37 +257,37 @@ class User implements UserInterface
 
         return $this;
     }
-    /**
+    /*  *
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
      * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName", size="imageSize")
      * 
      * @var File
      */
-    private $imageFile;
+   /*  private $imageFile;  */
 
-    /**
+     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $imageName;
+   /*  private $imageName;  */
 
-    /**
+     /**
      * @ORM\Column(type="integer")
      *
      * @var integer
      */
-    private $imageSize;
+   /*  private $imageSize;  */
 
-    /**
+     /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
-    private $updatedAt;
+   /*  private $updatedAt;  */
 
-    /**
+   /*  *
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -296,28 +296,28 @@ class User implements UserInterface
      *
      * @param File $imageFile
      */
-    public function setImageFile(?File $imageFile = null): void
+    /* public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
 
       if($this->imageFile instanceof UploadedFile){
           $this->updatedAt= new\Datetime('now');
-      }
+      } */
     }
 
-    public function getImageFile(): ?File
+  /*   public function getImageFile(): ?File
     {
         return $this->imageFile;
-    }
+    } */
 
-    public function setImageName(?string $imageName): void
+    /* public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
-    }
+    } */
 
-    public function getImageName(): ?string
+    /* public function getImageName(): ?string
     {
         return $this->imageName;
     }    
+ */
 
-}

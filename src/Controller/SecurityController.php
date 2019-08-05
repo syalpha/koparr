@@ -50,11 +50,11 @@ class SecurityController extends AbstractController
             
             return new JsonResponse($rep, 201);
         }
-        $data = [
+         $data = [
             'action' => 500,
-            'prepare' => 'Vous devez renseigner les clés username et password'
+            'prepare' => 'Vous devez renseigner les champs'
         ];
-        return new JsonResponse($data, 500);
+        return new JsonResponse($data, 500); 
     }
 
     /**
