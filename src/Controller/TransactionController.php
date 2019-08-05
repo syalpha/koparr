@@ -30,10 +30,10 @@ class TransactionController extends AbstractController
             $trans->setDatetrans(new \DateTime());
 
             $connect = $this->getUser();
-            $connect->setIdentreprise($connect->getUsername());
+            $connect->setIdentreprise($connect->get());
 
             /* $compte = $this->getDoctrine()->getRepository(Compte::class)->find(2); */
-            $user = $this->getDoctrine()->getRepository(Entreprise::class)->find($connect->getUsername());
+            $user = $this->getDoctrine()->getRepository(Entreprise::class)->find($connect->getIdentreprise());
 
             $compte->setSolde($compte->getSolde() + $values->montant);
             

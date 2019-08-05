@@ -15,6 +15,7 @@ return [
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
         '/compte' => [[['_route' => 'compte', '_controller' => 'App\\Controller\\CompteController::compte'], null, null, null, false, false, null]],
         '/addentreprise' => [[['_route' => 'entreprise', '_controller' => 'App\\Controller\\EntrepiseController::add'], null, null, null, false, false, null]],
+        '/ajoutcaissier' => [[['_route' => 'app_entrepise_addcaisse', '_controller' => 'App\\Controller\\EntrepiseController::addcaisse'], null, null, null, false, false, null]],
         '/api/register' => [[['_route' => 'register', '_controller' => 'App\\Controller\\SecurityController::register'], null, ['POST' => 0], null, false, false, null]],
         '/api/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\SecurityController::login'], null, ['POST' => 0], null, false, false, null]],
         '/api/ajoutcaissier' => [[['_route' => 'app_security_addcaisse', '_controller' => 'App\\Controller\\SecurityController::addcaisse'], null, null, null, false, false, null]],

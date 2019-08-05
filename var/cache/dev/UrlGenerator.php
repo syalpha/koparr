@@ -17,6 +17,7 @@ return [
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception::cssAction'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], []],
     'compte' => [[], ['_controller' => 'App\\Controller\\CompteController::compte'], [], [['text', '/compte']], [], []],
     'entreprise' => [[], ['_controller' => 'App\\Controller\\EntrepiseController::add'], [], [['text', '/addentreprise']], [], []],
+    'app_entrepise_addcaisse' => [[], ['_controller' => 'App\\Controller\\EntrepiseController::addcaisse'], [], [['text', '/ajoutcaissier']], [], []],
     'register' => [[], ['_controller' => 'App\\Controller\\SecurityController::register'], [], [['text', '/api/register']], [], []],
     'login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/api/login']], [], []],
     'app_security_addcaisse' => [[], ['_controller' => 'App\\Controller\\SecurityController::addcaisse'], [], [['text', '/api/ajoutcaissier']], [], []],

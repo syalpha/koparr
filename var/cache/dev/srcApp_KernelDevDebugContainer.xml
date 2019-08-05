@@ -3515,6 +3515,13 @@
     </service>
     <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false">
       <call method="add">
+        <argument type="service" id=".security.request_matcher.NYe61TH"/>
+        <argument type="collection">
+          <argument>ROLE_SUPER_ADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
         <argument type="service" id=".security.request_matcher.Ud1TEPV"/>
         <argument type="collection">
           <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
@@ -4023,6 +4030,9 @@
         <argument key="security.firewall.map.context.dev" type="service" id="security.firewall.map.context.dev"/>
         <argument key="security.firewall.map.context.login" type="service" id="security.firewall.map.context.login"/>
       </argument>
+    </service>
+    <service id=".security.request_matcher.NYe61TH" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/addentreprise</argument>
     </service>
     <service id=".security.request_matcher.Ud1TEPV" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/api/login</argument>
@@ -5324,11 +5334,13 @@
         <argument key="entityManager" type="service" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
-    <service id=".service_locator.WpZKSt4" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.4U80DWN" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CompteController::compte" type="service" id=".service_locator.JBoVXlr"/>
-        <argument key="App\Controller\EntrepiseController::add" type="service" id=".service_locator.6puk0Ru"/>
+        <argument key="App\Controller\EntrepiseController::add" type="service" id=".service_locator.JBoVXlr"/>
+        <argument key="App\Controller\EntrepiseController::addcaisse" type="service" id=".service_locator.JBoVXlr"/>
+        <argument key="App\Controller\EntrepiseController::addpart" type="service" id=".service_locator.JBoVXlr"/>
         <argument key="App\Controller\SecurityController::addcaisse" type="service" id=".service_locator.6puk0Ru"/>
         <argument key="App\Controller\SecurityController::block" type="service" id=".service_locator.g3AG1HS"/>
         <argument key="App\Controller\SecurityController::dblock" type="service" id=".service_locator.g3AG1HS"/>
@@ -5337,7 +5349,9 @@
         <argument key="App\Controller\SecurityController::show" type="service" id=".service_locator.fPmj2Hu"/>
         <argument key="App\Controller\TransactionController::transac" type="service" id=".service_locator.ZIsCxOI"/>
         <argument key="App\Controller\CompteController:compte" type="service" id=".service_locator.JBoVXlr"/>
-        <argument key="App\Controller\EntrepiseController:add" type="service" id=".service_locator.6puk0Ru"/>
+        <argument key="App\Controller\EntrepiseController:add" type="service" id=".service_locator.JBoVXlr"/>
+        <argument key="App\Controller\EntrepiseController:addcaisse" type="service" id=".service_locator.JBoVXlr"/>
+        <argument key="App\Controller\EntrepiseController:addpart" type="service" id=".service_locator.JBoVXlr"/>
         <argument key="App\Controller\SecurityController:addcaisse" type="service" id=".service_locator.6puk0Ru"/>
         <argument key="App\Controller\SecurityController:block" type="service" id=".service_locator.g3AG1HS"/>
         <argument key="App\Controller\SecurityController:dblock" type="service" id=".service_locator.g3AG1HS"/>
@@ -5619,12 +5633,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.WpZKSt4"/>
+      <argument type="service" id=".service_locator.4U80DWN"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.WpZKSt4"/>
+      <argument type="service" id=".service_locator.4U80DWN"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -6103,7 +6117,7 @@
     <service id="Vich\UploaderBundle\Form\Type\VichImageType" alias="vich_uploader.form.type.image" public="false"/>
     <service id="Vich\UploaderBundle\Templating\Helper\UploaderHelper" alias="vich_uploader.templating.helper.uploader_helper" public="false"/>
     <service id="Vich\UploaderBundle\Twig\Extension\UploaderExtension" alias="vich_uploader.twig.extension.uploader" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.WpZKSt4"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.4U80DWN"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>

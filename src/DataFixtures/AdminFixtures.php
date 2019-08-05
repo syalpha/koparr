@@ -24,7 +24,7 @@ class AdminFixtures extends Fixture
          $utilisateur->setNom('SY');
          $utilisateur->setPrenom('Alpha');
          $utilisateur->setEmail('papa@gmail.com');
-         $utilisateur->setRoles(['ROLES_SUPER_ADMIN']);
+         $utilisateur->setRoles(['ROLES_ADMIN']);
          $password = $this->encoder->encodePassword($utilisateur,'hello');
          $utilisateur->setPassword($password);
          
