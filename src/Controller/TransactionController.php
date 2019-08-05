@@ -23,16 +23,22 @@ class TransactionController extends AbstractController
         if (isset($values->montant)) {
     
             $trans= new Transaction();
+            /* $compte= new Compte(); */
+
             $trans->setMontant($values->montant);
             $trans->setDatetrans(new \DateTime());
 
-            $compte = $this->getDoctrine()->getRepository(Compte::class)->find($values-> idcompte_id);
+            $compte = $this->getDoctrine()->getRepository(Compte::class)->find(2);
+            $user = $this->getDoctrine()->getRepository(User::class)->find(1);
 
             $compte->setSolde($compte->getSolde() + $values->montant);
             
             $trans->setIdcompte($compte);
+            $trans->setIduser($user);
             $entityManager->persist($trans);
+            $entityManager->persist($compte);
             $entityManager->flush();
+            /*  $entityManager->persist($user); */
            /*  $entityManager->persist($prest);
             $trans->setIdcompte($compte);
             $prest=$this->getDoctrine()->getRepository(User::class)->find(2);
@@ -43,7 +49,7 @@ class TransactionController extends AbstractController
                 'message' => 'L\'utilisateur a été créé'
             ];
 
-            return new JsonResponse('vbvbvb: '.$compte->getSolde());
+            return new JsonResponse('test');
         } 
     
     } 

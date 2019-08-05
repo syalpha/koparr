@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Entreprise;
+use App\Repository\EntrepriseRepository;
 
 /**
  * @Route("/api")
@@ -22,13 +23,14 @@ class SecurityController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
     {
         $values = json_decode($request->getContent());
-        if (isset($values->username,$values->password,$values->nom,$values->prenom,$values->adresse,$values->telephone)) 
+        if (isset($values->username,$values->password,$values->nom,$values->prenom,$values->adresse,$values->telephone,$values->cni)) 
         {
 
             $user = new User();
             $user->setUsername($values->username);
             $user->setNom($values->nom);
             $user->setPrenom($values->prenom);
+            $user->setCNI($values->cni);
             $user->setAdresse($values->adresse);
             $user->setTelephone($values->telephone);
             $user->setPassword($passwordEncoder->encodePassword($user, $values->password));
@@ -42,15 +44,15 @@ class SecurityController extends AbstractController
             $entityManager->flush();
             
             $rep = [
-                'status' => 201,
-                'message' => 'L\'utilisateur a été créé'
+                'action' => 201,
+                'prepare' => 'L\'utilisateur a été créé'
             ];
             
             return new JsonResponse($rep, 201);
         }
         $data = [
-            'status' => 500,
-            'message' => 'Vous devez renseigner les clés username et password'
+            'action' => 500,
+            'prepare' => 'Vous devez renseigner les clés username et password'
         ];
         return new JsonResponse($data, 500);
     }
@@ -100,5 +102,80 @@ class SecurityController extends AbstractController
             'message' => 'VERIFIER LES INFORMATION SAISIE'
         ];
         return new JsonResponse($data, 500);
+    }
+
+    
+    /*
+    * @Route("/{id}", name="prestataires_show", methods={"GET"})
+    */
+    public function show(EntrepriseRepository $Repository,$id )
+    {
+        $result = $Repository->find($id);
+        $result = $this->get('serializer')->serialize($result,'json');
+        $response = new Response($result);
+        return($response);
+        
+    }
+    /*
+    * @Route("/{id}/edit", name="prestataires_edit", methods={"GET","POST"})
+    */
+    public function edit(Request $request,EntrepriseRepository $Repository,$id)
+    {
+        $values = $request->getContent();
+        $values = json_decode($values, true);
+        
+        $entreprise = $Repository->find($id);
+        
+        $entreprise ->setNomentreprise($values-> nomentreprise);
+        $entreprise ->setNinea($values-> ninea);
+        $entreprise ->setNumregistre($values-> numregistre);
+        $entreprise ->setAdresse($values-> adresse);
+        $entreprise ->setEmail($values-> email);
+        $entreprise ->setTelephone($values-> telephone);
+        $entreprise ->setStatut('ACTIF');
+        var_dump($entreprise);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        
+        $response = new Response("response edit");
+        return($response);
+    }
+    
+    /**
+    * @Route("/{id}/block", name="entrprise_blk", methods={"GET","POST"})
+    */
+    public function block(entrepriseRepository $entrepriseRepository,$id)
+    {
+    
+        $entreprise = $entrepriseRepository->find($id);
+        $entreprise ->setStatut("blked");
+    
+        var_dump($entreprise);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+    
+        $response = new Response("response");
+        return($response);
+    
+    }
+    /** 
+     * @Route("/{id}/dblock", name="entreprise_dblk", methods={"GET","POST"})
+     */
+    public function dblock(entrepriseRepository $entrepriseRepository,$id)
+    {
+        
+        $prestataire = $entrepriseRepository->find($id);
+        $prestataire ->setStatut("dblked");
+        
+        var_dump($prestataire);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        
+        $response = new Response("response");
+        return($response);
+    
     }
 }
