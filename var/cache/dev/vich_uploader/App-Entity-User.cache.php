@@ -1,0 +1,1 @@
+<?php return unserialize('C:42:"Vich\\UploaderBundle\\Metadata\\ClassMetadata":168:{a:2:{i:0;a:0:{}i:1;s:139:"a:5:{i:0;s:15:"App\\Entity\\User";i:1;a:0:{}i:2;a:0:{}i:3;a:1:{i:0;s:47:"/home/alpha/khaliss/khaliss/src/Entity/User.php";}i:4;i:1565001757;}";}}');

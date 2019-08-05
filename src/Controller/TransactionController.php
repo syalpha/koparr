@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Flex\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Proxies\__CG__\App\Entity\Entreprise;
 
 class TransactionController extends AbstractController
 { 
@@ -23,20 +24,21 @@ class TransactionController extends AbstractController
         if (isset($values->montant)) {
     
             $trans= new Transaction();
-            /* $compte= new Compte(); */
+             $compte= new Compte(); 
 
             $trans->setMontant($values->montant);
             $trans->setDatetrans(new \DateTime());
 
-            $connect
+            $connect = $this->getUser();
+            $connect->setIdentreprise($connect->getUsername());
 
-            $compte = $this->getDoctrine()->getRepository(Compte::class)->find(2);
-            $user = $this->getDoctrine()->getRepository(User::class)->find($values-> Iduser);
+            /* $compte = $this->getDoctrine()->getRepository(Compte::class)->find(2); */
+            $user = $this->getDoctrine()->getRepository(Entreprise::class)->find($connect->getUsername());
 
             $compte->setSolde($compte->getSolde() + $values->montant);
             
-            $trans->getIdcompte($compte);
-            $trans->getIduser($user);
+           /*  $trans->getIdcompte($compte); */
+            $trans->setIdentreprise($user);
             $entityManager->persist($trans);
             $entityManager->persist($compte);
             $entityManager->flush();
